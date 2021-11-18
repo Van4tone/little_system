@@ -141,6 +141,24 @@ void CanSendMsgFun(u8 *buf)
 	u8 *start_buf;
 
 	if(can_send_ctr.flag.start_status ==0)
+	{
+		if(buf[2] == 0)
+			return;
+		can_send_ctr.buf = buf;
+		can_send_ctr.len = buf[2];
+		can_send_ctr.flag.start_status = 1;
+		can_send_ctr.flag.bus_status = 1;
+	}
+
+	if(can_send_ctr.len == 0)
+	{
+		can_send_ctr.times = 0;
+		can_send_ctr.times = 59;
+		return;
+	}
+
+	buf = can_send_ctr.buf;
+		
 }
 
 
