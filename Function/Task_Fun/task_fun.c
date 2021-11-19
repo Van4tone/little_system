@@ -43,9 +43,11 @@ void MsgFunTask()
 {
 	if(task.can_en == 1 )
 	{
-		PackMsg2Send();
+		PackMsg2SendDeal();
 		task.can_en = 0;
 	}
+	PackMsgRecvDeal();
+	
 }
 
 
