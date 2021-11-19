@@ -172,6 +172,15 @@ void CanMsgPack2Send(u8 *buf,u8 len)
 	CanSendMsgFun(send_msg_frame.buf);
 }
 
+// can read msg check
+u8 CanRecvMsgCheck(u8 *buf, u8 len)
+{
+	if(buf[len - 1] == GetCanFrameCheckByte(buf, len - 1))
+		return 0;
+	else
+		return 1;
+}
+
 
 
 // can信息封包及功能初始化
@@ -186,6 +195,7 @@ u8 CanFunctionInit()
 	send_msg_frame.send_frame.len   = FRAME_LEN;
 
 	CanPortInit();
+	return 0;
 }
 
 

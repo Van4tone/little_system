@@ -3,6 +3,10 @@
 
 #include "common.h"
 
+
+#define CYCLE_CNT_MAX 10
+
+
 // can brate 
 #define CAN_BRATE_100K 	0
 #define CAN_BRATE_125K 	1
@@ -91,7 +95,7 @@ typedef struct CAN_R_MSG {
 	u16 len;
 	u16 init_len;
 	u8 *buf;
-	u8 time;
+	u8 times;
 	can_recv_flag_type flag;
 }can_recv_ctr_type;
 
