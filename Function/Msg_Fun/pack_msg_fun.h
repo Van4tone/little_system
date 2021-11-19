@@ -34,7 +34,7 @@ typedef struct RUN_MODE_MSG{
 
 	// 当前的值
 	u16 cut_val;
-	u16 coag_va;
+	u16 coag_val;
 	u16 doub_val;
 }run_mode_msg_type;
 
@@ -84,8 +84,9 @@ Com_Msg_Type msg_package_manager;
 
 
 void MsgPackageInit();
+void CfigModeSendMsgPackagePare();
+void RunModeSendMsgPackagePare();
+void PackMsg2SendDeal();
 
-void PackMsg2Send();
-
-
+void PackMsgRecvDeal();
 #endif

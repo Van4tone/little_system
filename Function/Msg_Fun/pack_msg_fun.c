@@ -12,7 +12,7 @@ void MsgPackageInit() // 要发送的信息包 buffer封装
 }
 
 //配置模式下的发送信息包打包
-void CfigModeMsgPackagePare()
+void CfigModeSendMsgPackagePare()
 {
 	msg_package_manager.cfig_msg_send_manager->cfg_run_mode = CFIG_MODE;
 	msg_package_manager.cfig_msg_send_manager->cfg_mode_val = cfig_manager->mode.cfg_mode_val;
@@ -28,7 +28,7 @@ void CfigModeMsgPackagePare()
 }
 
 //运行模式下的发送信息包打包
-void RunModeMsgPackagePare()
+void RunModeSendMsgPackagePare()
 {
 	msg_package_manager.run_msg_send_manager->cfg_run_mode = RUN_MODE;
 	msg_package_manager.run_msg_send_manager->sig_doub_mode = run_manager->mode.sig_doub_mode;
@@ -42,27 +42,60 @@ void RunModeMsgPackagePare()
 	msg_package_manager.run_msg_send_manager->doub_val = run_manager->modes_power[run_manager->mode.doub_mode];
 }
 
-void PackMsg2Send() // 打包信息并发送
+void PackMsg2SendDeal() // 打包信息并发送
 {
 	if(cfig_manager->mode.cfg_run_mode == CFIG_MODE)
 	{
 		if(cfig_manager->mode.cfg_mode_val >= CFIG_R_MODE)
 			return;
-		CfigModeMsgPackagePare();
+		CfigModeSendMsgPackagePare();
 		CanMsgPack2Send((u8*)msg_package_manager.cfig_msg_send_manager,sizeof(cfig_mode_msg_type));
 	}
 	else
 	{
-		RunModeMsgPackagePare();
+		RunModeSendMsgPackagePare();
 		CanMsgPack2Send((u8*)msg_package_manager.run_msg_send_manager,sizeof(run_mode_msg_type));
 	}
 
 	if(msg_package_manager.cmd != NORM_MSG_MODE)
 	{
 		msg_package_manager.pre_cmd = msg_package_manager.cmd;
-		msg_package_manager.cmd = NORM_MSG_MODE;
-		
+		msg_package_manager.cmd = NORM_MSG_MODE;	
 	}
+}
+
+// 配置模式下的消息响应
+void CfigModeMsgResponse()
+{
+	
+}
+
+// 运行模式下的消息响应
+
+void RunModeMsgResponse()
+{
+	
+}
+
+
+void MsgResponseFun() //消息响应处理函数
+{
+	if(cfig_manager->mode.cfg_run_mode == CFIG_MODE)
+		CfigModeMsgResponse();
+	else
+		RunModeMsgResponse();
+}
+
+void MsgErrReponse()
+{
+	
+}
+
+
+// 信息接收处理
+void PackMsgRecvDeal()
+{
+	CanReadMsgDeal();
 }
 
 
