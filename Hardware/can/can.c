@@ -161,7 +161,7 @@ void CanSendMsgFun(u8 *buf)
 		
 }
 
-
+//打包数据并发送
 void CanMsgPack2Send(u8 *buf,u8 len)
 {
 	if(can_send_ctr.flag.bus_status ==1)
@@ -173,11 +173,12 @@ void CanMsgPack2Send(u8 *buf,u8 len)
 }
 
 
+
 // can信息封包及功能初始化
-void CanFunctionInit()
+u8 CanFunctionInit()
 {
-	//can_recv_ctr.flag = 0;
-	//can_send_ctr.flag = 0;
+	ClearParame(&can_recv_ctr.flag);
+	ClearParame(can_send_ctr.flag);
 
 	can_recv_ctr.buf = recv_msg_frame.buf;
 	send_msg_frame.send_frame.head0 = FRAME_HEAD0;
