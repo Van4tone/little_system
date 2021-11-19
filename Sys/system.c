@@ -10,6 +10,12 @@ void interrupt Extern_Int(void)
 }
 
 
+void ClearParame(void *data)
+{
+	unsigned char *temp = (unsigned char*)data;
+	temp = 0;
+}
+
 void GetNumQuantile(u16 val,u8 *dec_buf)
 {
 	u8 Hundred,Ten;
