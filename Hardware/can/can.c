@@ -116,86 +116,34 @@ u8 GetCanFrameCheckByte(u8 *frame,u8 len)
 	return check + 1;
 }
 
-//将要发送的数据封装到帧的buf里
-void PackCanSendMsg(u8 *buf,u8 len)
+// can发送buf函数
+u8 CanSendBuf(u8 *buf,u8 len)
 {
-	u8 i = 3;
-	u8 temp;
-	if(len >(FRAME_LEN - 4))
-		len = FRAME_LEN - 4;
-	
-	send_msg_frame.send_frame.len = len + 4;
-	temp = send_msg_frame.send_frame.len - 1;
-	while(i<temp)
-	{
-		send_msg_frame.buf[i] = buf[i-3];
-		i++;
-	}
-	send_msg_frame.buf[i] = GetCanFrameCheckByte(send_msg_frame.buf, temp);
-}
+	u8 buflen;
+	u8 *txreg = (u8*)&TXB0D0;
 
-//CAN发送数据功能函数
-void CanSendMsgFun(u8 *buf)
-{
-	u8 buf_len;
-	u8 *start_buf;
-
-	if(can_send_ctr.flag.start_status ==0)
-	{
-		if(buf[2] == 0)
-			return;
-		can_send_ctr.buf = buf;
-		can_send_ctr.len = buf[2];
-		can_send_ctr.flag.start_status = 1;
-		can_send_ctr.flag.bus_status = 1;
-	}
-
-	if(can_send_ctr.len == 0)
-	{
-		can_send_ctr.times = 0;
-		can_send_ctr.times = 59;
-		return;
-	}
-
-	buf = can_send_ctr.buf;
-		
-}
-
-//打包数据并发送
-void CanMsgPack2Send(u8 *buf,u8 len)
-{
-	if(can_send_ctr.flag.bus_status ==1)
-		return;
-	if(len == 0)
-		return;
-	PackCanSendMsg(buf,len);
-	CanSendMsgFun(send_msg_frame.buf);
-}
-
-// can read msg check
-u8 CanRecvMsgCheck(u8 *buf, u8 len)
-{
-	if(buf[len - 1] == GetCanFrameCheckByte(buf, len - 1))
-		return 0;
+	// 判断是否还在发送
+	if(TXB0REQ == TXREQ_RUN_CMD)
+		return  1;
+	// 判断当前buf长度是否超过can的缓存
+	if(len > DLC_LEN_8B)
+		buflen = DLC_LEN_8B;
 	else
-		return 1;
-}
+		buflen = len;
+	if(buflen == 0)
+		return 0;
 
+	// 配置can的发送长度
+	TXB0DLC = buflen;
+	while(buflen--)
+	{
+		*txreg++ = *buf++;
+	}
 
+	TXBOREQ = TXREQ_RUN_CMD;
 
-// can信息封包及功能初始化
-u8 CanFunctionInit()
-{
-	ClearParame(&can_recv_ctr.flag);
-	ClearParame(can_send_ctr.flag);
-
-	can_recv_ctr.buf = recv_msg_frame.buf;
-	send_msg_frame.send_frame.head0 = FRAME_HEAD0;
-	send_msg_frame.send_frame.head1 = FRAME_HEAD1;
-	send_msg_frame.send_frame.len   = FRAME_LEN;
-
-	CanPortInit();
 	return 0;
 }
+
 
 

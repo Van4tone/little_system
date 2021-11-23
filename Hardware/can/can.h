@@ -52,7 +52,13 @@
 #define CAN_RX_ID_L (RXB0SID0 & 0xe0)
 #define CAN_RX_ID_H (RXB0SID0 >>8)
 
-//扩展位
+// TXBCON; YXB0REQ 请求发送报文状态位
+#define TXREQ_BIT           3
+#define TXREQ_RUN_CMD       1  // 请求开始发送，发送完毕后清零
+#define TXREQ_OVER_STATUS   0 //当前发送完成状态
+
+
+//优先级配置
 #define TXPRI_H_3 	3
 #define TXPRI_H_2 	2
 #define TXPRI_H_1 	1
@@ -133,8 +139,8 @@ u8 CanPortInit();
 
 u8 GetCanFrameCheckByte(u8 *frame,u8 len);
 
-void CanFunctionInit();
 
+u8 CanSendBuf(u8 *buf,u8 len);
 
 
 
