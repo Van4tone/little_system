@@ -41,7 +41,7 @@ void DispFunTask()
 
 void MsgFunTask()
 {
-	if(task.can_en == 1 )
+	if(task.can_en == 1 ||msg_package_manager.cmd == CMD_MSG_MODE)
 	{
 		PackMsg2SendDeal();
 		task.can_en = 0;
