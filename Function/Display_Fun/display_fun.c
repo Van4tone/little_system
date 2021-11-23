@@ -221,6 +221,20 @@ void CfigModeSegDisPidValue()//数码管6 7 8 显示pid的值（PWM,P/I）
 		return;
 	}
 
+	//上位机是否允许保存
+	if(msg_package_manager.cfig_msg_send_manager->recored_en)
+	{
+		disp_manager.seg_manager.cfig_seg_en.value_flush_en ^= 1;
+		
+		if(disp_manager.seg_manager.cfig_seg_en.value_flush_en)
+		{
+			PackSegNumBuf(SEG_6,digit_seg[CHAR_NULL]);
+			PackSegNumBuf(SEG_7,digit_seg[CHAR_NULL]);
+			PackSegNumBuf(SEG_8,digit_seg[CHAR_NULL]);
+			return;
+		}
+	}
+
 	if(cfig_manager->mode.cfg_mode_val == CFIG_PID_MODE)
 		val = cfig_manager->pwm_val;
 	else

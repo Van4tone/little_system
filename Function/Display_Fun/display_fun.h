@@ -110,6 +110,7 @@ typedef struct CfigMode_Seg_En {
 		unsigned pwm_array_num_en : 1; // 对应数码管 3 的显示使能
 		unsigned value_en : 1; // 设定值和反馈显示（数码管6 7 8 显示 pwm值和 p_ad u_ad i_ad的值）
 		unsigned bar_en : 1; // 横杠显示使能
+		unsigned value_flush_en : 1; //数值刷新使能
 }cfig_mode_seg_en_type;
 
 typedef struct Seg_Info {
