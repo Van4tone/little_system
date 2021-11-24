@@ -132,6 +132,11 @@ void MsgResponseFun() //消息响应处理函数
 		CfigModeMsgResponse();
 	else
 		RunModeMsgResponse();
+
+	if(msg_package_manager.pre_cmd != NORM_MSG_MODE)
+	{
+		msg_package_manager.pre_cmd = NORM_MSG_MODE;
+	}
 }
 
 void MsgErrReponse()
