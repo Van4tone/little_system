@@ -1,6 +1,6 @@
 #ifndef _SYS_H_
 #define _SYS_H_
-
+#include "common.h"
 enum {
 	RUN_MODE = 0,
 	CFIG_MODE = 1,
@@ -149,6 +149,9 @@ run_struct_type *run_manager;
 
 
 void GetNumQuantile(u16 val,u8 *dec_buf);
+
+
+void ClearParame(void* data);
 
 void Int_Init();
 

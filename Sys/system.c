@@ -1,4 +1,4 @@
-#include "common.h"
+#include "sys.h"
 
 
 void interrupt low_priority Communicate_Timer0Int()
@@ -21,10 +21,6 @@ void interrupt low_priority Communicate_Timer0Int()
     }
 }
 
-
-
-
-
 void interrupt Extern_Int(void)
 {
 	if(TMR1IF && TMR1IE)
@@ -34,11 +30,12 @@ void interrupt Extern_Int(void)
 }
 
 
-void ClearParame(void *data)
+void ClearParame(void* data)
 {
 	unsigned char *temp = (unsigned char*)data;
 	temp = 0;
 }
+
 
 void GetNumQuantile(u16 val,u8 *dec_buf)
 {
@@ -62,6 +59,9 @@ void GetNumQuantile(u16 val,u8 *dec_buf)
 	dec_buf[1] = Ten;
 	dec_buf[0] = val;
 }
+
+
+
 
 
 void Int_Init()

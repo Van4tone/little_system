@@ -3,7 +3,7 @@
 
 void MsgPackageInit() // 要发送的信息包 buffer封装
 {
-	msg_package_manager.cmd = CMD_MODE;
+	msg_package_manager.cmd = CMD_MSG_MODE;
 	msg_package_manager.cfig_msg_send_manager = (cfig_mode_msg_type*)(send_msg_frame.buf + 3);
 	msg_package_manager.cfig_msg_recv_manager = (cfig_mode_msg_type*)(recv_msg_frame.buf + 3);
 
@@ -72,7 +72,7 @@ void CfigModeMsgResponse()
 	static u8 seg_flush_times = 0;
 
 	// 刷新运行状态灯和音频
-	if(msg_package_manager.cfig_msg_send_manager.start_en == 1)
+	if(msg_package_manager.cfig_msg_send_manager->start_en == 1)
 	{
 		cfig_manager->mode.work_mode = msg_package_manager.cfig_msg_recv_manager->work_mode;
 		disp_manager.led_manager.led_en.work_status_en = 1;

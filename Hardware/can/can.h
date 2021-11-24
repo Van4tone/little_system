@@ -1,8 +1,7 @@
-#ifndef __CAN_H_
-#define __CAN_H_
+#ifndef _CAN_DEV_H_
+#define _CAN_DEV_H_
 
 #include "common.h"
-
 
 #define CYCLE_CNT_MAX 10
 

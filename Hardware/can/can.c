@@ -1,4 +1,4 @@
-﻿#include "can.h"
+#include "can.h"
 
 
 //can pin脚初始化
@@ -11,13 +11,15 @@ void CanPinInit()
 // Can 模式状态检测
 u8 CheckCanModeStatus(u8 mode)
 {
+
 	u16 i;
 	for(i=0;i<500;i++)
 	{
-		if((CANSTAT &(0x7<<5)) == mode)
+		if((CANSTAT & (0x7<<5)) == mode)
 			return 0;
 
 	}
+	
 	return 1;
 }
 
@@ -46,6 +48,8 @@ void SetCanPortBrate(u8 brate)
 			break;
 	}
 }
+
+
 // can口功能设置
 u8 CanPortInit()
 {
@@ -104,7 +108,6 @@ u8 CanPortInit()
 	return 0;
 }
 
-
 // 获取帧的校验位
 u8 GetCanFrameCheckByte(u8 *frame,u8 len)
 {
@@ -116,7 +119,6 @@ u8 GetCanFrameCheckByte(u8 *frame,u8 len)
 	}
 	return check + 1;
 }
-
 
 // can发送buf函数
 u8 CanSendBuf(u8 *buf,u8 len)
@@ -142,19 +144,20 @@ u8 CanSendBuf(u8 *buf,u8 len)
 		*txreg++ = *buf++;
 	}
 
-	TXBOREQ = TXREQ_RUN_CMD;
+	TXB0REQ = TXREQ_RUN_CMD;
 
 	return 0;
 }
 
 
+
 u8 *GetCanRecvBufAddr()
 {
-	return (u8*)&RXB0D0;
+	return ((u8*)&RXB0D0);
 }
+
 
 void ReleaseCanRecvBuf()
 {	
 	RXB0CON &= 0x07F;
 }
-
