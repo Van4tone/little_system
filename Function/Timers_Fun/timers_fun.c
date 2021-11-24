@@ -59,3 +59,8 @@ void Timer0IntDeal()
 	Timer0IntSysDeal();
 	Timer0IntTaskDeal();
 }
+
+void Timer1IntDeal()
+{
+	
+}

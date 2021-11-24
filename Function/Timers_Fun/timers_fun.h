@@ -30,4 +30,6 @@ void Timer0IntSysDeal();
 
 void Timer0IntDeal();
 
+void Timer1IntDeal();
+
 #endif
