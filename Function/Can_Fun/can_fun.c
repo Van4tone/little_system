@@ -3,25 +3,64 @@
 
 
 
+/****************************************************************************
+****************************** 接收函数     *************************************
+****************************************************************************/
+
+
+void CanIntRecvFun()
+{
+	u8 i = 0;
+	u8 *readreg = GetCanRecvBufAddr();
+
+	// 判断是否第一次读取
+	if(can_recv_ctr.flag.start_s1 == 0)
+	{
+		if(readreg[0]== FRAME_HEAD0 && readreg[1] == FRAME_HEAD1)
+		{
+			can_recv_ctr.flag.start_s1 = 1;
+			can_recv_ctr.len = readreg[2];
+			can_recv_ctr.buf = recv_msg_frame.buf;
+		}
+	}
+
+	//判断buf是否大于缓存的大小
+	if(can_recv_ctr.len > DLC_LEN_8B)
+	{
+		i = 8;
+		can_recv_ctr.len = DLC_LEN_8B;
+	}
+	else
+	{
+		i = can_recv_ctr.len;
+		can_recv_ctr.len = 0;
+	}
+
+	// 取值
+	while(i--)
+	{
+		*can_recv_ctr.buf++ = *readreg++;
+	}
+
+	//判断是否接收完成
+	if(can_recv_ctr.len == 0)
+	{
+		can_recv_ctr.flag.end_s = 1;
+		can_recv_ctr.times = 0;
+	}
+	else
+		can_recv_ctr.times = 59;
+
+	ReleaseCanRecvBuf();
+	
+}
 
 
 
+/****************************************************************************
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+***************************** 发送函数      *************************************
+****************************************************************************/
 
 //将要发送的数据封装到帧的buf里
 void PackCanSendMsg(u8 *buf,u8 len)

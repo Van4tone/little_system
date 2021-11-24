@@ -3,39 +3,21 @@
 #include "common.h"
 
 
+void CanIntRecvFun();
+
+void PackCanSendMsg(u8 *buf,u8 len);
+
+void CanSendMsgFun(u8 *buf);
+
+void CanMsgPack2Send(u8 *buf,u8 len);
+
+u8 CanRecvMsgCheck(u8 *buf, u8 len);
+
+u8 CanCheckRecvMsg(u8 *buf,u8 len);
 
 void CanReadMsgDeal();
 
-
-
-
-
-void CanFunctionInit();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+u8 CanFunctionInit();
 
 
 
