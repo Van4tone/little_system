@@ -104,6 +104,7 @@ u8 CanPortInit()
 	return 0;
 }
 
+
 // 获取帧的校验位
 u8 GetCanFrameCheckByte(u8 *frame,u8 len)
 {
@@ -115,6 +116,7 @@ u8 GetCanFrameCheckByte(u8 *frame,u8 len)
 	}
 	return check + 1;
 }
+
 
 // can发送buf函数
 u8 CanSendBuf(u8 *buf,u8 len)
@@ -146,4 +148,13 @@ u8 CanSendBuf(u8 *buf,u8 len)
 }
 
 
+u8 *GetCanRecvBufAddr()
+{
+	return (u8*)&RXB0D0;
+}
+
+void ReleaseCanRecvBuf()
+{	
+	RXB0CON &= 0x07F;
+}
 

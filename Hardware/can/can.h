@@ -91,8 +91,8 @@ typedef struct CAN_S_MSG {
 }can_send_ctr_type;
 
 typedef struct CAN_R_FLAG {
-	unsigned start_s1 : 1;
-	unsigned start_s2 : 1;
+	unsigned start_s1 : 1; // 第一次读取的状态
+	unsigned start_s2 : 1; // 第二次读取的状态
 	unsigned end_s : 1;
 	unsigned err_cnt : 5;
 }can_recv_flag_type;
@@ -139,9 +139,10 @@ u8 CanPortInit();
 
 u8 GetCanFrameCheckByte(u8 *frame,u8 len);
 
-
 u8 CanSendBuf(u8 *buf,u8 len);
 
+u8 *GetCanRecvBufAddr();
 
+void ReleaseCanRecvBuf();
 
 #endif
