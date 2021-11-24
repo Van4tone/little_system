@@ -1,11 +1,35 @@
 #include "common.h"
 
 
-void interrupt Extern_Int(void)
+void interrupt low_priority Communicate_Timer0Int()
 {
+	if(RXB0IF && (PIE3 & 1<<3))
+	{
+		CanIntRecvFun();
+		RXB0IF = 0;
+	}
+
+	if(TXB0IF && (PIE3 & 1<<2))
+	{
+		CanSendMsgFun(can_send_ctr.buf);
+		TXB0IF = 0;
+	}
+
 	if(TMR0IF && TMR0IE)
     {
 		Timer0IntDeal(); 
+    }
+}
+
+
+
+
+
+void interrupt Extern_Int(void)
+{
+	if(TMR1IF && TMR1IE)
+    {
+		Timer1IntDeal(); 
     }
 }
 
