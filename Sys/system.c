@@ -1,8 +1,9 @@
 #include "sys.h"
 
 
-void interrupt low_priority Communicate_Timer0Int()
+void interrupt low_priority Timer0_Int(void)
 {
+	
 	if(RXB0IF && (PIE3 & 1<<3))
 	{
 		CanIntRecvFun();
@@ -21,14 +22,15 @@ void interrupt low_priority Communicate_Timer0Int()
     }
 }
 
+
 void interrupt Extern_Int(void)
 {
+
 	if(TMR1IF && TMR1IE)
     {
 		Timer1IntDeal(); 
     }
 }
-
 
 void ClearParame(void* data)
 {
@@ -75,6 +77,7 @@ void HardWareInit()
 	Key_Init();
 	Max7219_Init();
 	Timer0Init();
+	Timer1Init();
 	I2C_Init();
 	CanFunctionInit();
     ALARM_LAMP_DIR = GPIO_MODE_OUT;
@@ -91,8 +94,8 @@ void Sys_Init()
 
 void Working()
 {
-	//cfig_manager->mode.cfg_run_mode = RUN_MODE;
-	cfig_manager->mode.cfg_run_mode = CFIG_MODE;
+	cfig_manager->mode.cfg_run_mode = RUN_MODE;
+	//cfig_manager->mode.cfg_run_mode = CFIG_MODE;
 
 	ScanKeyStatus();
 	ScanKeyStatus();
