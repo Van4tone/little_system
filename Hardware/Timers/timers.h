@@ -9,5 +9,10 @@
 void Timer0Set(u16 time);
 
 void Timer0Init(void);
+
+void Timer1Set(u16 time);
+
+void Timer1Init(void);
+
 void T0Delay();
 #endif
